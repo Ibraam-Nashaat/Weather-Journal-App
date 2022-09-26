@@ -27,3 +27,10 @@ const server = app.listen(port, listening);
  function listening(){
     console.log(`running on localhost: ${port}`);
   };
+
+app.post('/', addData);
+const data = [];
+function addData (req,res){
+  data.push(req.body);
+  console.log(data);
+};

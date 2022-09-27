@@ -28,11 +28,13 @@ const server = app.listen(port, listening);
     console.log(`running on localhost: ${port}`);
   };
 
+// Get request to send the stored data
 app.get('/data',getData);
 function getData(req,res){
     res.send(projectData);
 }
 
+//post request to store the sent data in projectData
 app.post('/', addData);
 function addData (req,res){
   projectData=req.body;

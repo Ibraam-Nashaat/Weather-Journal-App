@@ -4,7 +4,7 @@ const apiKey="&appid=e3aec68fd901b006998cdf08ebefcbc9&units=imperial"; //The API
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
 
 //An Event Listener when the generate button is clicked to retrieve the temperature from the API
 //then update the UI dynamically

@@ -5,7 +5,7 @@ const apiKey="&appid=e3aec68fd901b006998cdf08ebefcbc9&units=imperial";
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
 
-document.getElementById('generate').addEventListener('click', performAction);
+document.querySelector('button').addEventListener('click', performAction);
 
 function performAction(e){
 const zipCode =  document.getElementById('zip').value;

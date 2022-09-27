@@ -1,4 +1,4 @@
 /commentsOnlyJS
 /node_modules
-/package
-/package-lock
+/package.json
+/package-lock.json

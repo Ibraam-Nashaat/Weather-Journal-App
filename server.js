@@ -33,4 +33,5 @@ const data = [];
 function addData (req,res){
   data.push(req.body);
   console.log(data);
+  res.send(data);
 };

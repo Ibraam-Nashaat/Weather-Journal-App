@@ -9,9 +9,15 @@ document.getElementById('generate').addEventListener('click', performAction);
 
 function performAction(e){
 const zipCode =  document.getElementById('zip').value;
-getWeatherStats(baseURL,zipCode, apiKey).then(function(WeatherData){
+getWeatherStats(baseURL,zipCode, apiKey).then(function(WeatherData)
+{
 const UserRes= document.getElementById('feelings').value;
-postData('/',{Temperature:WeatherData.main,Feelings:UserRes,Date:newDate});
+postData('/',{Temperature:WeatherData.main.temp,Contents:UserRes,Date:newDate}).then(function(data)
+{
+  document.getElementById("date").innerHTML= "Date: "+data[data.length-1].Date;
+  document.getElementById("temp").innerHTML= "Temp: "+data[data.length-1].Temperature;
+  document.getElementById("content").innerHTML= "Content: "+data[data.length-1].Contents;
+})
 });
 
 }
@@ -40,7 +46,8 @@ const postData=async(url,data={})=>{
         body: JSON.stringify(data), // body data type must match "Content-Type" header        
       });
     try {
-      
+      const retrieve = await res.json();
+      return retrieve;
     }  catch(error) {
       console.log("error", error);
       // appropriately handle the error

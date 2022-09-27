@@ -63,10 +63,11 @@ button{
     box-shadow: 2px 4px 5px #444;
     border-radius: 0.25em;
     margin: 2em;
-    /*transition: 0.7s ease;*/
+    transition: 0.7s ease;
 }
 button:hover{
     transform: scale(1.1);
+    cursor: pointer;
 }
 h1{
     font-size: 36px;

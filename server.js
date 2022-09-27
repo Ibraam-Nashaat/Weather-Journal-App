@@ -28,10 +28,14 @@ const server = app.listen(port, listening);
     console.log(`running on localhost: ${port}`);
   };
 
+app.get('/data',getData);
+function getData(req,res){
+    res.send(projectData);
+}
+
 app.post('/', addData);
-const data = [];
 function addData (req,res){
-  data.push(req.body);
-  console.log(data);
-  res.send(data);
+  projectData=req.body;
+  console.log(projectData);
 };
+

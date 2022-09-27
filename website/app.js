@@ -9,18 +9,18 @@ document.querySelector('button').addEventListener('click', performAction);
 
 function performAction(e){
 const zipCode =  document.getElementById('zip').value;
-getWeatherStats(baseURL,zipCode, apiKey).then(function(WeatherData)
+retrieveData('/data').then(function(projectData){
+getWeatherStats(baseURL,zipCode, apiKey).then(function(temp)
 {
-const UserRes= document.getElementById('feelings').value;
-postData('/',{Temperature:WeatherData.main.temp,Contents:UserRes,Date:newDate}).then(function(data)
-{
-  document.getElementById("date").innerHTML= "Date: "+data[data.length-1].Date;
-  document.getElementById("temp").innerHTML= "Temp: "+data[data.length-1].Temperature;
-  document.getElementById("content").innerHTML= "Content: "+data[data.length-1].Contents;
-})
+projectData.Temperature= temp;
+projectData.Contents= document.getElementById('feelings').value;
+projectData.Date= newDate;
+postData('/',projectData).then(UpdateUI('/data'))
 });
 
-}
+})};
+
+
 const getWeatherStats = async (baseURL, zipCode, key)=>{
 
   const res = await fetch(baseURL+zipCode+key)
@@ -28,11 +28,24 @@ const getWeatherStats = async (baseURL, zipCode, key)=>{
 
     const data = await res.json();
     console.log(data)
-    return data;
+    return data.main.temp;
   }  catch(error) {
     console.log("error", error);
     // appropriately handle the error
   }
+}
+
+const retrieveData=async(url)=>{
+  const res= await fetch(url);
+  try {
+    // Transform into JSON
+    const projectData = await res.json();
+    return projectData;
+    }
+    catch(error) {
+      console.log("error", error);
+      // appropriately handle the error
+    }
 }
 
 const postData=async(url,data={})=>{
@@ -53,3 +66,20 @@ const postData=async(url,data={})=>{
       // appropriately handle the error
     }
   }
+
+  const UpdateUI = async(url) =>{
+    const res = await fetch(url);
+    try {
+    // Transform into JSON
+    const allData = await res.json();
+    console.log(allData);
+    // Write updated data to DOM elements
+    document.getElementById('temp').innerHTML ="Temp: " +Math.round(allData.Temperature)+ ' degrees';
+    document.getElementById('content').innerHTML = "Feelings: "+ allData.Contents;
+    document.getElementById('date').innerHTML ="Date: " + allData.Date;
+    }
+    catch(error) {
+      console.log("error", error);
+      // appropriately handle the error
+    }
+   }
